@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GeoCoordinate" Version="2.0.1" />
+    <PackageReference Include="GeoCoordinate.NetCore" Version="1.0.0.1" />
+    <PackageReference Include="SQLite.Interop" Version="1.0.0" />
+    <PackageReference Include="SQLite.Interop.dll" Version="1.0.103" />
+    <PackageReference Include="Sqlite.Interop.Net46.x64" Version="1.0.109" />
+    <PackageReference Include="System.Device.Location.Portable" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DTED_Reader">
+      <HintPath>..\..\..\..\Downloads\DDDDDL\DTED_Reader_Test\DTED_Reader_Test\DTED_Reader_Test\DTED_Reader.dll</HintPath>
+    </Reference>
+    <Reference Include="GeodesicLibrary">
+      <HintPath>..\..\..\..\Downloads\DDDDDL\DDDP\GeodesicLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="LOSLibrary">
+      <HintPath>..\..\..\..\Downloads\LOSLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite">
+      <HintPath>E:\Google Drive\Paper\Algorith implementation\algorithm_CS\bin\Debug\netcoreapp2.1\System.Data.SQLite.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

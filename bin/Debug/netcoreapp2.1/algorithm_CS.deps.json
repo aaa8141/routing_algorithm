@@ -1,0 +1,160 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v2.1",
+    "signature": "990fe343a319bdb8482a09d7790e167597b7b1de"
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v2.1": {
+      "algorithm_CS/1.0.0": {
+        "dependencies": {
+          "GeoCoordinate": "2.0.1",
+          "GeoCoordinate.NetCore": "1.0.0.1",
+          "SQLite.Interop": "1.0.0",
+          "SQLite.Interop.dll": "1.0.103",
+          "Sqlite.Interop.Net46.x64": "1.0.109",
+          "System.Device.Location.Portable": "1.0.0",
+          "DTED_Reader": "1.0.0.0",
+          "GeodesicLibrary": "0.0.0.0",
+          "LOSLibrary": "1.0.0.0"
+        },
+        "runtime": {
+          "algorithm_CS.dll": {}
+        }
+      },
+      "GeoCoordinate/2.0.1": {},
+      "GeoCoordinate.NetCore/1.0.0.1": {
+        "runtime": {
+          "lib/netstandard1.6/GeoCoordinate.NetCore.dll": {
+            "assemblyVersion": "1.0.0.1",
+            "fileVersion": "1.0.0.1"
+          }
+        }
+      },
+      "SQLite.Interop/1.0.0": {
+        "runtime": {
+          "lib/SQLite.Interop.dll": {
+            "fileVersion": "1.0.105.2"
+          }
+        }
+      },
+      "SQLite.Interop.dll/1.0.103": {},
+      "Sqlite.Interop.Net46.x64/1.0.109": {
+        "dependencies": {
+          "System.Data.SQLite.Core": "1.0.108"
+        }
+      },
+      "System.Data.SQLite.Core/1.0.108": {
+        "runtime": {
+          "lib/net46/System.Data.SQLite.dll": {
+            "assemblyVersion": "1.0.108.0",
+            "fileVersion": "1.0.108.0"
+          }
+        }
+      },
+      "System.Device.Location.Portable/1.0.0": {
+        "runtime": {
+          "lib/System.Device.Portable.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "DTED_Reader/1.0.0.0": {
+        "runtime": {
+          "DTED_Reader.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "GeodesicLibrary/0.0.0.0": {
+        "runtime": {
+          "GeodesicLibrary.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "LOSLibrary/1.0.0.0": {
+        "runtime": {
+          "LOSLibrary.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "algorithm_CS/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "GeoCoordinate/2.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-d7zEo4cgzRkiyq6mohyWmtC3TMXwa0yVl5NkBg5Sdoz7j0GnW809onY7QxYCAkiSLoAHYh59rWBTXG6m8pAJ7Q==",
+      "path": "geocoordinate/2.0.1",
+      "hashPath": "geocoordinate.2.0.1.nupkg.sha512"
+    },
+    "GeoCoordinate.NetCore/1.0.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8C5ZcAJXIEq3SL3spW7BtmGgYWvQMB6AuApkSFbCXPaOZOwEW2AwhlWn0IHXJ0iI9qjvpf/9Urcd7obgKoMpKg==",
+      "path": "geocoordinate.netcore/1.0.0.1",
+      "hashPath": "geocoordinate.netcore.1.0.0.1.nupkg.sha512"
+    },
+    "SQLite.Interop/1.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-iYxYn4a6E47q/4mDh4ytNADRJg2i3HUMP+FtVt7xxjbfiH9MSxwlwfI716B7VJXBwBUcLa80XHb2VLZEFIg4aA==",
+      "path": "sqlite.interop/1.0.0",
+      "hashPath": "sqlite.interop.1.0.0.nupkg.sha512"
+    },
+    "SQLite.Interop.dll/1.0.103": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-MpR6xi2ETrEKRF19OZbFUa2UOOdK/rMwuKF/dQNff7pTfpzCX1b2bAJj7cqULYpMWRa+KVvuWurNGD/DA8QYfg==",
+      "path": "sqlite.interop.dll/1.0.103",
+      "hashPath": "sqlite.interop.dll.1.0.103.nupkg.sha512"
+    },
+    "Sqlite.Interop.Net46.x64/1.0.109": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ZNB38/6cKO6KY5ZNskXXaxlKO5K1XabMzszo1G5rGR6hXytkN8OF26GnexszfzU04nnpvUUGmijttKWXZieFYA==",
+      "path": "sqlite.interop.net46.x64/1.0.109",
+      "hashPath": "sqlite.interop.net46.x64.1.0.109.nupkg.sha512"
+    },
+    "System.Data.SQLite.Core/1.0.108": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-A/KOsFGxCm7njdD9aYPloBGmNPReYiEU9GCMt8cIJ6a2kZKaWRcyydJKQAgAUX5u9ufhz0eMBVytahAmOFkKmg==",
+      "path": "system.data.sqlite.core/1.0.108",
+      "hashPath": "system.data.sqlite.core.1.0.108.nupkg.sha512"
+    },
+    "System.Device.Location.Portable/1.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lc1rKlouCYbGjrGsqhVYguXHTyWB0c78uzJxWtYt+VTasUtSLBlIh3vZ3bM+y4lyO4gp6sMTdLx7N62kzhnKLA==",
+      "path": "system.device.location.portable/1.0.0",
+      "hashPath": "system.device.location.portable.1.0.0.nupkg.sha512"
+    },
+    "DTED_Reader/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "GeodesicLibrary/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "LOSLibrary/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

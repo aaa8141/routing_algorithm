@@ -1,0 +1,15 @@
+E:\Google Drive\Paper\Algorith implementation\algorithm_CS\bin\Debug\netcoreapp2.1\algorithm_CS.deps.json
+E:\Google Drive\Paper\Algorith implementation\algorithm_CS\bin\Debug\netcoreapp2.1\algorithm_CS.runtimeconfig.json
+E:\Google Drive\Paper\Algorith implementation\algorithm_CS\bin\Debug\netcoreapp2.1\algorithm_CS.runtimeconfig.dev.json
+E:\Google Drive\Paper\Algorith implementation\algorithm_CS\bin\Debug\netcoreapp2.1\algorithm_CS.dll
+E:\Google Drive\Paper\Algorith implementation\algorithm_CS\bin\Debug\netcoreapp2.1\algorithm_CS.pdb
+E:\Google Drive\Paper\Algorith implementation\algorithm_CS\obj\Debug\netcoreapp2.1\algorithm_CS.csprojAssemblyReference.cache
+E:\Google Drive\Paper\Algorith implementation\algorithm_CS\obj\Debug\netcoreapp2.1\algorithm_CS.csproj.CoreCompileInputs.cache
+E:\Google Drive\Paper\Algorith implementation\algorithm_CS\obj\Debug\netcoreapp2.1\algorithm_CS.AssemblyInfoInputs.cache
+E:\Google Drive\Paper\Algorith implementation\algorithm_CS\obj\Debug\netcoreapp2.1\algorithm_CS.AssemblyInfo.cs
+E:\Google Drive\Paper\Algorith implementation\algorithm_CS\obj\Debug\netcoreapp2.1\algorithm_CS.dll
+E:\Google Drive\Paper\Algorith implementation\algorithm_CS\obj\Debug\netcoreapp2.1\algorithm_CS.pdb
+E:\Google Drive\Paper\Algorith implementation\algorithm_CS\bin\Debug\netcoreapp2.1\DTED_Reader.dll
+E:\Google Drive\Paper\Algorith implementation\algorithm_CS\bin\Debug\netcoreapp2.1\GeodesicLibrary.dll
+E:\Google Drive\Paper\Algorith implementation\algorithm_CS\obj\Debug\netcoreapp2.1\algorithm_CS.csproj.CopyComplete
+E:\Google Drive\Paper\Algorith implementation\algorithm_CS\bin\Debug\netcoreapp2.1\LOSLibrary.dll
