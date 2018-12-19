@@ -5,15 +5,57 @@ using System.Device.Location;
 
 namespace algorithm_CS
 {
+    public class waypoint
+    {
+        private static List<List<int>> waypoint_global;
+        
+        public waypoint(){
+            waypoint_global = new List<List<int>> ();
+        }
+
+        public void add(List<int> tmp){
+            waypoint_global.Add(tmp);
+        }
+
+        public void delete(int i){
+            waypoint_global[i].Add(1);
+        }
+
+        public void refresh(){
+            foreach(List<int> item in waypoint_global){
+                if(item.Count == 3){
+                    item.Remove(item[2]);
+                }
+            }
+        }
+
+        public int count(){
+            return waypoint_global.Count;
+        }
+        public List<int> get(int i)
+        {
+            return waypoint_global[i];
+        }
+
+        public List<List<int>> get_all(){
+            return waypoint_global;
+        }
+
+    }
+
+
     public class Program
     {
-        public static List<List<int>> waypoint_global = new List<List<int>> ();
+        // testdata
+        // height
+
         public static DTED_Loader_SQLite_Library.DTED_Loader_Library height_loader = new DTED_Loader_SQLite_Library.DTED_Loader_Library("E:\\Downloads\\DDDDDL\\DTED.db");
         public static int method = 1;
         public static int level_limit = 5;
         public static float penalty = 2;
-        public static float velocity = 20;
+        public static float velocity = 50;
         public static int size = 100;
+        public static waypoint waypoint_global = new waypoint();
 
         public static void Main(string[] args)
         {
@@ -34,18 +76,23 @@ namespace algorithm_CS
             List<List<int>> waypoint_local = new List<List<int>> ();
            
             foreach(List<float> loc in input.waypoint_cmp){
-                waypoint_local.Add(functions.transform(loc[0], loc[1], map.Item3.map_init_location, map.Item3.margin_lat, map.Item3.margin_lng));
-                waypoint_global.Add(functions.transform(loc[0], loc[1], map.Item3.map_init_location, map.Item3.margin_lat, map.Item3.margin_lng));
+                List<int> trans_res = functions.transform(loc[0], loc[1], map.Item3.map_init_location, map.Item3.margin_lat, map.Item3.margin_lng);
+                waypoint_local.Add(trans_res);
+                waypoint_global.add(trans_res);
+                loc.AddRange(new List<float> {trans_res[0], trans_res[1]});
+            }
+
+            foreach(List<int> aaaaa in waypoint_global.get_all())
+            {
+                Console.WriteLine((aaaaa[0], aaaaa[1]));
             }
 
 
-            //foreach(List<int> aaa in waypoint_global)
-            // {
-            //    Console.WriteLine((aaa[0], aaa[1]));
-            // }
-            var all_result = new List<Tuple<float, List<List<int>>>> ();
-            for (int z = 2; z <= 20; z += 1)
+            var all_result = new List<Tuple<float, List<List<float>>>> ();
+            for (int z = 1; z <= 20; z += 1)
             {   
+                waypoint_global.refresh();
+
                 List<List<int>> raw_result = functions.routing(start, target, z, 0, method, size, waypoint_local, 1, map.location, map.risk, map.Item3.map_init_location, map.Item3.margin_lat, map.Item3.margin_lng, level_limit, penalty);
                 List<List<int>> result = new List<List<int>>();
                 foreach(List<int> item in raw_result)
@@ -55,11 +102,39 @@ namespace algorithm_CS
                         result.Add(item);
                     }
                 }
+
+                List<int> start_om = functions.transform(input.start[0], input.start[1], map.Item3.map_init_location, map.Item3.margin_lat, map.Item3.margin_lng);
+                start_om.Add((int)(Program.height_loader.Get_Height(start[1], start[0]) / 500));
+                List<int> target_om = functions.transform(input.target[0], input.target[1], map.Item3.map_init_location, map.Item3.margin_lat, map.Item3.margin_lng);
+                target_om.Add((int)(Program.height_loader.Get_Height(target[1], target[0]) / 500));
+
+                result.Insert(0, start_om);
+                result.Add(target_om);
+
                 Tuple<float, List<List<int>>> tmp = new Tuple<float, List<List<int>>>(functions.route_risk(result, map.location, map.risk), result);
                 Console.WriteLine(tmp.Item1);
-                all_result.Add(tmp);
+                List<List<float>> loc_ori = new List<List<float>> ();
+                foreach (List<int> aaa in tmp.Item2)
+                {
+                    Console.WriteLine((aaa[0], aaa[1], aaa[2]));
+                    foreach (List<float> loc in input.waypoint_cmp)
+                    {
+                        if (aaa[0] == loc[2] && aaa[1] == loc[3])
+                        {
+                            loc_ori.Add(new List<float> {loc[0], loc[1], aaa[2] * 500});
+                            break;
+                        }
+                    }
+                }
+                foreach (List<float> aaaaa in loc_ori)
+                {
+                    Console.WriteLine((aaaaa[0], aaaaa[1], aaaaa[2]));
+                }
+                Tuple<float, List<List<float>>> tmp2 = new Tuple<float, List<List<float>>>(tmp.Item1, loc_ori);
+                all_result.Add(tmp2);
                 Console.ReadLine();
             }
+
             Console.ReadLine();
             // // // float[,] passpoint = new float[2,4];
             // List<List<int>> tmp = new List<List<int>> ();
@@ -91,7 +166,6 @@ namespace algorithm_CS
             }
             return total_risk;
         }
-
 
         public static (float[] start, float[] target, float[,] threat, float[,] feasible, List<List<float>> waypoint_cmp) reading_file(string file_path){
             string[] input = System.IO.File.ReadAllLines(@file_path);
@@ -130,6 +204,7 @@ namespace algorithm_CS
                     feasible[feasible_count, 0] = float.Parse(line.Split(',')[0]);;
                     feasible[feasible_count, 1] = float.Parse(line.Split(',')[1]);;
                     feasible_count++;
+
                     List<float> tmp = new List<float>();
                     tmp.Add(float.Parse(line.Split(',')[0]));
                     tmp.Add(float.Parse(line.Split(',')[1]));
@@ -147,11 +222,13 @@ namespace algorithm_CS
             float[] target = {location[tail[0]][tail[1]][tail[2]].lat, location[tail[0]][tail[1]][tail[2]].lgt, location[tail[0]][tail[1]][tail[2]].hgt};
 
             float dis = distance(start, target);
-            int n = (int) Math.Round(dis / Program.velocity);
+            float n = (int)Math.Round(dis / Program.velocity);
+
             if (dis >= Program.velocity){
                 float margin_x = (tail[0] - head[0]) / n;
                 float margin_y = (tail[1] - head[1]) / n;
                 float margin_z = (tail[2] - head[2]) / n;
+               
 
                 for (int i = 0; i <= n; i++){    // 有蒜頭
                     int next_x = (int)Math.Round(head[0] + margin_x * i);
@@ -161,7 +238,6 @@ namespace algorithm_CS
                     tmp_risk += risk_map[next_x][next_y][next_z];
                 }
             }
-
             return tmp_risk;
         }
 
@@ -186,6 +262,7 @@ namespace algorithm_CS
             }
             return risk_sum;
         }
+
         public static (List<List<List<(float lat, float lgt, float hgt)>>> location, List<List<List<float>>> risk, (float[] map_init_location, float margin_lat, float margin_lng)) create_map_risk(float[] start, float[] target, float[,] threat, int size=100){
             // must dieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
@@ -213,8 +290,8 @@ namespace algorithm_CS
                 for (int j = 0; j < size; j++){
                     List<(float lat, float lgt, float hgt)> location2 = new List<(float lat, float lgt, float hgt)> ();
                     List<float> risk2 = new List<float> ();
-                    for (int k = 0; k <= 20; k++){
-                        var location3 = (lat: map_init_location[0] + i * margin_lat, lng:map_init_location[1] + j * margin_lng, hgt: (float)((2 + 0.5 * k) * 500));
+                    for (int k = 1; k <= 20; k++){
+                        var location3 = (lat: map_init_location[0] + i * margin_lat, lng:map_init_location[1] + j * margin_lng, hgt: (float)(k * 500));
                         // location3.lat = (map_init_location[0] + i * margin_lat);
                         // location3.lng = (map_init_location[1] + j * margin_lng);
                         // location3.hgt = ((float)(2 + 0.5 * k));
@@ -251,9 +328,10 @@ namespace algorithm_CS
             level += 1;
             
             List<int> start_om = transform(start[0], start[1], map_init_location, margin_lat, margin_lng);
-            start_om.Add(2);
+            start_om.Add((int)(Program.height_loader.Get_Height(start[1], start[0]) / 500));
             List<int> target_om = transform(target[0], target[1], map_init_location, margin_lat, margin_lng);
-            target_om.Add(2);
+            target_om.Add((int)(Program.height_loader.Get_Height(target[1], target[0]) / 500));
+
             float min_risk = 100000;
             var min_tmp_risk_list = (new List<float>() {}, 0.0, new List<int>() {1, 2, 3}); 
             
@@ -328,25 +406,31 @@ namespace algorithm_CS
                 int min_index = new int();
                 var tmp_risk_list = (new List<float>() {}, 0.0, new List<int>() {});
                 //foreach(List<int> loc in Program.waypoint_global){
+                Console.WriteLine((start_om[0], start_om[1]));
+                Console.WriteLine((target_om[0], target_om[1]));
+
                 for (int i = 0; i < waypoint_local.Count; i++) {
-                    List<int> loc = Program.waypoint_global[i];
+                    List<int> loc = Program.waypoint_global.get(i);
+                    // Console.WriteLine((loc[0],loc[1]));
                     if (head_x <= loc[0] && loc[0] <= tail_x && head_y <= loc[1] && loc[1] <= tail_y && loc.Count == 2 && Program.height_loader.Get_Height(map_init_location[1] + loc[1] * margin_lng, map_init_location[0] + loc[0] * margin_lat) / 500 < z){
 
                         loc.Add(z);
+
                         float first_risk = path_risk(start_om, loc, location, risk_map);
                         float second_risk = path_risk(loc, target_om, location, risk_map);
                         loc.Remove(z);
 
                         float tmp_risk = 0;
-                        if (first_risk > 0 && second_risk > 0)
+                        if (first_risk > 0)
                         {
-                            tmp_risk = first_risk + second_risk;
+                            tmp_risk += first_risk;
                         }
-                        else
+                        if (second_risk > 0)
                         {
-                            continue;
+                            tmp_risk += second_risk;
                         }
-
+                        
+                        Console.WriteLine((loc[0], loc[1], tmp_risk));
                         Boolean check = false;
                         if (tmp_risk <= min_risk)
                         {
@@ -370,6 +454,7 @@ namespace algorithm_CS
                                     float total_dis = distance(first, loc_rl) + distance(loc_rl, second);
                                     tmp_risk_list = (new List<float> { loc_rl[0], loc_rl[1], loc_rl[2] }, total_dis, new List<int>() { loc[0], loc[1], z });
                                     min_risk = tmp_risk;
+                                    min_index = i;
                                     min_tmp_risk_list = tmp_risk_list;
                                 }
                             }
@@ -377,6 +462,10 @@ namespace algorithm_CS
                     }
            
                 }
+
+                Console.WriteLine((min_tmp_risk_list.Item3[0], min_tmp_risk_list.Item3[1], min_tmp_risk_list.Item3[2]));
+                Console.ReadLine();
+
                 // if (level == 1){
                 //     waypoint_local.Remove(new List<int> {min_tmp_risk_list.Item3[0], min_tmp_risk_list.Item3[1], min_tmp_risk_list.Item3[2]});
                 // }
@@ -389,28 +478,28 @@ namespace algorithm_CS
                 // float[] second = {location[target_om[0]][target_om[1]][target_om[2]].lat, location[target_om[0]][target_om[1]][target_om[2]].lgt, location[target_om[0]][target_om[1]][target_om[2]].hgt};
                                     
                 float risk_ori = path_risk(start_om, target_om, location, risk_map);
+
                 Console.WriteLine(risk_ori - min_risk);
                 // Console.WriteLine(min_tmp_risk_list.Item1);
 
                 if (level <= level_limit && (risk_ori - min_risk) > penalty && min_tmp_risk_list.Item1.Count == 3){
                     Console.WriteLine(risk_ori - min_risk);
-                    if (false)
+                    if (true)
                     {
                         // 刪除問題待修正
                         Console.WriteLine((min_tmp_risk_list.Item3[0], min_tmp_risk_list.Item3[1]));
-                        Console.WriteLine(waypoint_local[min_index].Count);
-                        Program.waypoint_global[min_index].Add(1);
-                        Console.WriteLine(waypoint_local[min_index].Count);
+                        // Console.WriteLine(waypoint_local[min_index].Count);
+                        // Program.waypoint_global[min_index].Add(1);
+                        Program.waypoint_global.delete(min_index);
+                        // Console.WriteLine(Program.waypoint_global.get(min_index).Count);
+                        // Console.WriteLine(waypoint_local[min_index].Count);
                     }
 
                     List<List<int>> first_route = routing(start, min_tmp_risk_list.Item1, z, level, method, size, waypoint_local, 1, location, risk_map, map_init_location, margin_lat, margin_lng, level_limit, penalty);
                     List<List<int>> second_route = routing(min_tmp_risk_list.Item1, target, z, level, method, size, waypoint_local, 1, location, risk_map, map_init_location, margin_lat, margin_lng, level_limit, penalty);
                     // List<List<int>> intermediate_point = new List<List<int>> {min_tmp_risk_list.Item3};
 
-                    if (min_tmp_risk_list.Item3.Count == 3)
-                    {
-                        first_route.Add(min_tmp_risk_list.Item3);
-                    }
+                    first_route.Add(min_tmp_risk_list.Item3);
                     first_route.AddRange(second_route);
 
                     return first_route;
